@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASS-21 Results</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+
+        /* User Score Table */
+        .score-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 1.1em; }
+        .score-table th { background: #007bff; color: white; padding: 12px; text-align: left; }
+        .score-table td { padding: 12px; border: 1px solid #ddd; }
+
+        /* Specific Colors for Severity Levels */
+        .level-Normal { background-color: #d4edda !important; color: #155724; font-weight: bold; }
+        .level-Mild, .level-Moderate { background-color: #fff3cd !important; color: #856404; font-weight: bold; }
+        .level-Severe { background-color: #fd7e14 !important; color: white; font-weight: bold; }
+        .level-Extremely-Severe { background-color: #f5c6cb !important; color: #721c24; font-weight: bold; }
+
+        /* Reference Scale Table */
+        .scale-info { margin-top: 40px; }
+        .scale-table { width: 100%; border-collapse: collapse; font-size: 0.9em; text-align: center; }
+        .scale-table th { background: #6c757d; color: white; padding: 10px; }
+        .scale-table td { padding: 8px; border: 1px solid #eee; }
+        .normal { background-color: #d4edda; }
+        .mild { background-color: #fff3cd; }
+        .moderate { background-color: #ffeeba; }
+        .severe { background-color: #f8d7da; } /* Keep original scale shades as per your request */
+        .extreme { background-color: #f5c6cb; color: #721c24; font-weight: bold; }
+
+        .btn-group { margin-top: 30px; display: flex; gap: 10px; }
+        .btn { padding: 10px 20px; border-radius: 5px; text-decoration: none; cursor: pointer; border: none; font-size: 1em; }
+        .btn-print { background: #17a2b8; color: white; }
+        .btn-home { background: #007bff; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>DASS-21 Assessment Results</h2>
+    <p><strong>Patient Name:</strong> <span th:text="${res.userName}"></span></p>
+    <p><strong>Date of Assessment:</strong> <span th:text="${res.testDate}"></span></p>
+
+    <table class="score-table">
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Calculated Score (Raw x 2)</th>
+            <th>Severity Level</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Depression</td>
+            <td th:text="${res.depScore}"></td>
+            <td th:class="${'level-' + #strings.replace(res.depLevel, ' ', '-')}" th:text="${res.depLevel}"></td>
+        </tr>
+        <tr>
+            <td>Anxiety</td>
+            <td th:text="${res.anxScore}"></td>
+            <td th:class="${'level-' + #strings.replace(res.anxLevel, ' ', '-')}" th:text="${res.anxLevel}"></td>
+        </tr>
+        <tr>
+            <td>Stress</td>
+            <td th:text="${res.strScore}"></td>
+            <td th:class="${'level-' + #strings.replace(res.strLevel, ' ', '-')}" th:text="${res.strLevel}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="scale-info">
+        <h3>Official Interpretation Scale (DASS-21)</h3>
+        <p><small>Note: These scores represent the DASS-21 sum multiplied by 2 to align with DASS-42 norms.</small></p>
+
+        <table class="scale-table">
+            <thead>
+            <tr>
+                <th>Severity</th>
+                <th>Depression</th>
+                <th>Anxiety</th>
+                <th>Stress</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="normal">
+                <td>Normal</td>
+                <td>0 – 4</td>
+                <td>0 – 3</td>
+                <td>0 – 7</td>
+            </tr>
+            <tr class="mild">
+                <td>Mild</td>
+                <td>5 - 6</td>
+                <td>4 – 5</td>
+                <td>8 – 9</td>
+            </tr>
+            <tr class="moderate">
+                <td>Moderate</td>
+                <td>7 – 10</td>
+                <td>6 – 7</td>
+                <td>10 – 12</td>
+            </tr>
+            <tr class="severe">
+                <td>Severe</td>
+                <td>11 – 13</td>
+                <td>8 – 9</td>
+                <td>13 – 16</td>
+            </tr>
+            <tr class="extreme">
+                <td>Extremely Severe</td>
+                <td>14 +</td>
+                <td>10 +</td>
+                <td>17 +</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-print" onclick="window.print()">Print to PDF</button>
+        <a href="/" class="btn btn-home">Start New Test</a>
+    </div>
+</div>
+
+</body>
+</html>

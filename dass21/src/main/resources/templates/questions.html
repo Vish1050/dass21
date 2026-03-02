@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #f9f9f9; }
+        .q-box { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 5px solid #007bff; }
+        .submit-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; cursor: pointer; font-size: 18px; }
+    </style>
+</head>
+<body>
+<h3>Hi, <span th:text="${userName}"></span></h3>
+<p>Please rate how much each statement applied to you over the past week.</p>
+
+<form action="/submit" method="post">
+    <input type="hidden" name="userName" th:value="${userName}">
+
+    <div th:each="q, stat : ${questions}" class="q-box">
+        <p th:text="${stat.count} + '. ' + ${q}"></p>
+        <label><input type="radio" th:name="'q' + ${stat.count}" value="0" required> 0</label>
+        <label><input type="radio" th:name="'q' + ${stat.count}" value="1"> 1</label>
+        <label><input type="radio" th:name="'q' + ${stat.count}" value="2"> 2</label>
+        <label><input type="radio" th:name="'q' + ${stat.count}" value="3"> 3</label>
+    </div>
+
+    <button type="submit" class="submit-btn">Get My Results</button>
+</form>
+</body>
+</html>
