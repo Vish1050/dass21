@@ -1,12 +1,10 @@
-# Step 1: Build the app using Maven and Java 25
-FROM maven:3-openjdk-21 AS build
-# Note: As of early 2026, Maven images often use 21 as the stable base,
-# but we will compile for 25 inside it.
+# Step 1: Build using Maven
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 COPY . .
 RUN mvn clean package -DskipTests
 
-# Step 2: Run the app using Java 25
-FROM openjdk:25-slim
+# Step 2: Run using Java
+FROM eclipse-temurin:21-jre
 COPY --from=build /target/dass-app.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
