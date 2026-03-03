@@ -16,7 +16,7 @@ FROM eclipse-temurin:25-jre
 WORKDIR /app
 
 # Copy the JAR from the build stage
-COPY --from=build /app/target/dass21-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/dass-app.jar app.jar
 
 EXPOSE 8080
 
